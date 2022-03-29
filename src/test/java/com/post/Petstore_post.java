@@ -5,6 +5,7 @@ import static io.restassured.RestAssured.given;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.http.Method;
 import io.restassured.response.Response;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import org.json.simple.JSONObject;
 import org.testng.annotations.Test;
 
 public class Petstore_post {
-  @Test
+  @Test(enabled=false)
   public void f() {
 	  HashMap<String,Object> map=new HashMap<String,Object>();
 	  map.put("id", 212);
@@ -51,13 +52,52 @@ public class Petstore_post {
 	  baseURI="https://petstore.swagger.io/v2";
 	  Response response= given().contentType(ContentType.JSON).body(payload).post("/pet");
 	  System.out.println(response.statusCode());
-		
-	  
-	  
-	  
-	 
-	  
-	  
-	  
+		  
   }
+  
+  @Test
+  public void f1() {
+	  HashMap<String,Object> map=new HashMap<String,Object>();
+	  map.put("id", 214);
+	  
+//	  ArrayList<HashMap<String,Object>> categorylist=new ArrayList<HashMap<String,Object>>();
+	  HashMap<String,Object> categorymap=new HashMap<String,Object>();
+	  categorymap.put("id", 214);
+	  categorymap.put("name", "random");
+	  
+//	  categorylist.add(categorymap);
+	  map.put("category", categorymap);
+	  
+	  map.put("name", "randomdoggie");
+	  
+	  ArrayList<String> photoUrlslist=new ArrayList<String>();
+	  photoUrlslist.add("string");
+	  
+	  map.put("photoUrls", photoUrlslist);
+	  
+	  ArrayList<HashMap<String,Object>> tagslist=new ArrayList<HashMap<String,Object>>();
+	  HashMap<String,Object>tagsmap=new HashMap<String,Object>();
+	  tagsmap.put("id",214);
+	  tagsmap.put("name", "randomdoggie");
+	  tagslist.add(tagsmap);
+	  
+	  map.put("tags", tagslist);
+	  
+	  map.put("status","available");
+	  
+	  JSONObject payload=new JSONObject(map);
+	  
+	  System.out.println(payload.toJSONString());
+	  
+	  baseURI="https://petstore.swagger.io/v2";
+	  Response response= given().contentType(ContentType.JSON).body(payload).request(Method.POST,"/pet");
+//	  System.out.println(response.statusCode());
+	  System.out.println(response.asString());
+		  
+  }
+  
+  
+  
+  
+  
 }

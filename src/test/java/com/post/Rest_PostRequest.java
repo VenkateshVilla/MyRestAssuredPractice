@@ -6,6 +6,8 @@ import org.testng.annotations.Test;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.http.Headers;
+import io.restassured.http.Method;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import static io.restassured.RestAssured.*;
@@ -14,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Rest_PostRequest {
-  @Test
+  @Test(enabled=false)
   public void f() {
 	  RestAssured.baseURI="https://bookstore.toolsqa.com/";
 	  String payload="\n"
@@ -33,7 +35,7 @@ public class Rest_PostRequest {
 	  Assert.assertEquals(201, response.getStatusCode());
   }
   
-  @Test
+  @Test(enabled=false)
   public void f1() {
 	  baseURI="https://reqres.in/";
 	  
@@ -53,7 +55,7 @@ public class Rest_PostRequest {
 	  
   }
   
-  @Test
+  @Test(enabled=false)
   public void f2() {
 	  baseURI="https://reqres.in/";
 	  JSONObject jsonPayload=new JSONObject();
@@ -72,7 +74,7 @@ public class Rest_PostRequest {
 	  	 statusCode(201).log().all(); 
   }
   
-  @Test
+  @Test(enabled=false)
   public void f3() {
 	  baseURI="https://reqres.in/";
 	  
@@ -87,8 +89,20 @@ public class Rest_PostRequest {
 	  response.prettyPrint();
   }
   
-  
-  
-  
+  @Test
+  public void f4() {
+	  baseURI="https://reqres.in/";
+	  
+	  String payload="{\n"
+	  		+ "    \"name\": \"morpheus\",\n"
+	  		+ "    \"job\": \"leader\"\n"
+	  		+ "}";
+	  
+	  Response response=given().contentType(ContentType.JSON).body(payload).request(Method.POST,"/api/users");
+	  int statusCode=response.getStatusCode();	
+	  System.out.println(statusCode);
+	  
+  }
+
   
 }
